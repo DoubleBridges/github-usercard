@@ -2,43 +2,6 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-// let followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
-// // let followersArray = [];
-
-// const getFollowers = (arr) => {
-//       arr.forEach(item => {
-//         followersArray.push(item.login)
-//         console.log(item.login)
-//       })
-// }  
-
-// axios.get(`https://api.github.com/users/doublebridges`)
-//   .then(data => {
-//     gitCard(data.data)
-//   })
-
-//   .catch(err => console.log(err))
-
-// axios.get(`https://api.github.com/users/doublebridges/followers`)
-// .then(data => {
-//   getFollowers(data.data)
-//   console.log(data.data)
-// })
-
-// .catch(err => console.log(err))
-
-// console.log(followersArray)
-
-
-
-// followersArray.forEach(item => {
-//   axios.get(`https://api.github.com/users/${item}`)
-//     .then(data => {
-//       gitCard(data.data)
-//     })
-//     .catch(err => console.log(err))
-// })
-// console.log(followersArray)
 
 function createUserCard(user) {
   return axios.get(`https://api.github.com/users/${user}`)
@@ -49,11 +12,12 @@ function createUserCard(user) {
     .catch(err => console.log(err))
 }
 
-let followers = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell']
+let followers = []
 
 const getFollowers = arr => {
   arr.forEach(follower => followers.push(follower.login)
   )
+  // return followers
 }
 
 function getUserFollowers(user) {
@@ -66,8 +30,8 @@ function getUserFollowers(user) {
 }
 
 function createFollowerCards(arr) {
-  arr.forEach(item => {
-    return axios.get(`https://api.github.com/users/${item}`)
+  arr.forEach(follower => {
+    return axios.get(`https://api.github.com/users/${follower}`)
       .then(data => {
         gitCard(data.data)
       })
@@ -77,7 +41,7 @@ function createFollowerCards(arr) {
 
 const createGitPage = user => {
   createUserCard(user)
-    .then(getUserFollowers)
+    .then(getUserFollowers(user))
     .then(createFollowerCards(followers))
     .catch(err => console.log(err))
 
