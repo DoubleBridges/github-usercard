@@ -2,16 +2,44 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+let followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+// let followersArray = [];
 
-const followersArray = ['doublebridges', 'tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+const getFollowers = (arr) => {
+      arr.forEach(item => {
+        followersArray.push(item.login)
+        console.log(item.login)
+      })
+}  
 
-followersArray.forEach(item => {
-  axios.get(`https://api.github.com/users/${item}`)
+axios.get(`https://api.github.com/users/doublebridges`)
   .then(data => {
     gitCard(data.data)
   })
+
   .catch(err => console.log(err))
+
+axios.get(`https://api.github.com/users/doublebridges/followers`)
+.then(data => {
+  getFollowers(data.data)
+  console.log(data.data)
 })
+
+.catch(err => console.log(err))
+
+console.log(followersArray)
+
+
+
+followersArray.forEach(item => {
+  axios.get(`https://api.github.com/users/${item}`)
+    .then(data => {
+      gitCard(data.data)
+      // console.log(data)
+    })
+    .catch(err => console.log(err))
+})
+console.log(followersArray)
 
 
 
