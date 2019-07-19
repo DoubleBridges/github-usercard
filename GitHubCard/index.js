@@ -6,7 +6,7 @@
 function createUserCard(user) {
   return axios.get(`https://api.github.com/users/${user}`)
     .then(data => {
-      console.log('9');
+      console.log('9, retrieves user');
       gitCard(data.data)
     })
 
@@ -16,17 +16,17 @@ function createUserCard(user) {
 let followers = []
 
 const getFollowers = arr => {
-  console.log('19')
+  console.log('19, getFollowers, pushes the followers into followers array')
   arr.forEach(follower => followers.push(follower.login)
   )
-  createFollowerCards(followers)
+  // createFollowerCards(followers)
   // return followers
 }
 
 function getUserFollowers(user) {
   return axios.get(`https://api.github.com/users/${user}/followers`)
     .then(dataArr => {
-      console.log('28')
+      console.log('28, getUserFollowers gets the user followers from github, calls getFollowers')
 
       getFollowers(dataArr.data)
     })
@@ -38,7 +38,7 @@ function createFollowerCards(arr) {
   arr.forEach(follower => {
     return axios.get(`https://api.github.com/users/${follower}`)
       .then(data => {
-        console.log('40')
+        console.log('40, createsFollowerCards by calling user follower API, calls gitCard')
 
         gitCard(data.data)
       })
@@ -47,7 +47,7 @@ function createFollowerCards(arr) {
 }
 
 const createGitPage = user => {
-  console.log('49')
+  console.log('49, creates git Page + calls createUserCard with a user')
 
   createUserCard(user)
     .then(getUserFollowers(user))
