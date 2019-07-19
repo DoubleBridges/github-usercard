@@ -16,9 +16,10 @@ function createUserCard(user) {
 let followers = []
 
 const getFollowers = arr => {
-  console.log('19, getFollowers, pushes the followers into followers array')
+  console.log(followers, '19, getFollowers, pushes the followers into followers array' )
   arr.forEach(follower => followers.push(follower.login)
   )
+  console.log(followers)
   createFollowerCards(followers)
   // return followers
 }
@@ -26,7 +27,7 @@ const getFollowers = arr => {
 function getUserFollowers(user) {
   return axios.get(`https://api.github.com/users/${user}/followers`)
     .then(dataArr => {
-      console.log('28, getUserFollowers gets the user followers from github, calls getFollowers')
+      console.log(followers, '28, getUserFollowers gets the user followers from github, calls getFollowers')
 
       getFollowers(dataArr.data)
     })
@@ -38,7 +39,7 @@ function createFollowerCards(arr) {
   arr.forEach(follower => {
     return axios.get(`https://api.github.com/users/${follower}`)
       .then(data => {
-        console.log('40, createsFollowerCards by calling user follower API, calls gitCard', followers)
+        console.log('40, createsFollowerCards by calling user follower API, calls gitCard')
 
         gitCard(data.data)
       })
