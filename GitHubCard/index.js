@@ -126,6 +126,7 @@ function gitCard(object) {
   userName.textContent = object.login
   location.textContent = object.location
   profile.textContent = `Profile: ${name.textContent}'s GitHub Repos`
+  profileLink.textContent = object.url
   followers.textContent = `Followers: ${object.followers}`
   following.textContent = `Following: ${object.following}`
   bio.textContent = `Bio: ${object.bio}`
