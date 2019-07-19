@@ -6,6 +6,7 @@
 function createUserCard(user) {
   return axios.get(`https://api.github.com/users/${user}`)
     .then(data => {
+      console.log('9');
       gitCard(data.data)
     })
 
@@ -15,14 +16,18 @@ function createUserCard(user) {
 let followers = []
 
 const getFollowers = arr => {
+  console.log('19')
   arr.forEach(follower => followers.push(follower.login)
   )
+  createFollowerCards(followers)
   // return followers
 }
 
 function getUserFollowers(user) {
   return axios.get(`https://api.github.com/users/${user}/followers`)
     .then(dataArr => {
+      console.log('28')
+
       getFollowers(dataArr.data)
     })
 
@@ -33,6 +38,8 @@ function createFollowerCards(arr) {
   arr.forEach(follower => {
     return axios.get(`https://api.github.com/users/${follower}`)
       .then(data => {
+        console.log('40')
+
         gitCard(data.data)
       })
       .catch(err => console.log(err))
@@ -40,6 +47,8 @@ function createFollowerCards(arr) {
 }
 
 const createGitPage = user => {
+  console.log('49')
+
   createUserCard(user)
     .then(getUserFollowers(user))
     .then(createFollowerCards(followers))
