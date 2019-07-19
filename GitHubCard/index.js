@@ -2,45 +2,89 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-let followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
-// let followersArray = [];
+// let followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+// // let followersArray = [];
 
-const getFollowers = (arr) => {
-      arr.forEach(item => {
-        followersArray.push(item.login)
-        console.log(item.login)
-      })
-}  
+// const getFollowers = (arr) => {
+//       arr.forEach(item => {
+//         followersArray.push(item.login)
+//         console.log(item.login)
+//       })
+// }  
 
-axios.get(`https://api.github.com/users/doublebridges`)
-  .then(data => {
-    gitCard(data.data)
-  })
+// axios.get(`https://api.github.com/users/doublebridges`)
+//   .then(data => {
+//     gitCard(data.data)
+//   })
 
-  .catch(err => console.log(err))
+//   .catch(err => console.log(err))
 
-axios.get(`https://api.github.com/users/doublebridges/followers`)
-.then(data => {
-  getFollowers(data.data)
-  console.log(data.data)
-})
+// axios.get(`https://api.github.com/users/doublebridges/followers`)
+// .then(data => {
+//   getFollowers(data.data)
+//   console.log(data.data)
+// })
 
-.catch(err => console.log(err))
+// .catch(err => console.log(err))
 
-console.log(followersArray)
+// console.log(followersArray)
 
 
 
-followersArray.forEach(item => {
-  axios.get(`https://api.github.com/users/${item}`)
+// followersArray.forEach(item => {
+//   axios.get(`https://api.github.com/users/${item}`)
+//     .then(data => {
+//       gitCard(data.data)
+//     })
+//     .catch(err => console.log(err))
+// })
+// console.log(followersArray)
+
+function createUserCard(user) {
+  return axios.get(`https://api.github.com/users/${user}`)
     .then(data => {
       gitCard(data.data)
-      // console.log(data)
     })
-    .catch(err => console.log(err))
-})
-console.log(followersArray)
 
+    .catch(err => console.log(err))
+}
+
+let followers = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell']
+
+const getFollowers = arr => {
+  arr.forEach(follower => followers.push(follower.login)
+  )
+}
+
+function getUserFollowers(user) {
+  return axios.get(`https://api.github.com/users/${user}/followers`)
+    .then(dataArr => {
+      getFollowers(dataArr.data)
+    })
+
+    .catch(err => console.log(err))
+}
+
+function createFollowerCards(arr) {
+  arr.forEach(item => {
+    return axios.get(`https://api.github.com/users/${item}`)
+      .then(data => {
+        gitCard(data.data)
+      })
+      .catch(err => console.log(err))
+  })
+}
+
+const createGitPage = user => {
+  createUserCard(user)
+    .then(getUserFollowers)
+    .then(createFollowerCards(followers))
+    .catch(err => console.log(err))
+
+  console.log(followers)
+}
+
+createGitPage('doublebridges')
 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
